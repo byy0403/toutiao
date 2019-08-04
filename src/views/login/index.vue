@@ -18,11 +18,14 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     const checkMobile = (rule, value, callback) => {
       // 校验手机号  1开头 第二位3-9  9位数字
-      if (!/^1[3-9]\d{9}$/.test(value)) { return callback(new Error('手机号格式不正确')) }
+      if (!/^1[3-9]\d{9}$/.test(value)) {
+        return callback(new Error('手机号格式不正确'))
+      }
       callback()
     }
     return {
@@ -54,6 +57,7 @@ export default {
             )
             .then(res => {
               console.log(res.data)
+              store.setUser(res.data.data)
               this.$router.push('/')
             })
             .catch(() => {
