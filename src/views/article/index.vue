@@ -3,7 +3,15 @@
 </template>
 
 <script>
-export default {}
+export default {
+  mounted () {
+    this.$http
+      .get('http://ttapi.research.itcast.cn/mp/v1_0/followers')
+      .then(result => {
+        console.log(result.data)
+      })
+  }
+}
 </script>
 
 <style>
