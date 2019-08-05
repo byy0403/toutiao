@@ -47,8 +47,8 @@
         <span class="text">江苏传智播客科技教育有限公司</span>
         <el-dropdown :hide-on-click="false">
           <span class="el-dropdown-link">
-            <img src="../../assets/images/avatar.jpg" alt />
-            浅殇愫暮
+            <img :src="photo" alt />
+            {{name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -68,16 +68,25 @@
   </el-container>
 </template>
 <script>
+import store from '@/store'
 export default {
   data () {
     return {
-      isCollapse: false
+      isCollapse: false,
+      name: '',
+      photo: ''
     }
   },
   methods: {
     toggleMenu () {
       this.isCollapse = !this.isCollapse
     }
+  },
+  created () {
+    // 本地获取用户信息
+    const user = store.getUser()
+    this.name = user.name
+    this.photo = user.photo
   }
 }
 </script>
