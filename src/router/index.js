@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
+import Setting from '@/views/setting'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -20,6 +22,11 @@ const router = new VueRouter({
           path: '/',
           name: 'welcome',
           component: Welcome
+        },
+        {
+          path: '/setting',
+          name: 'Setting',
+          component: Setting
         }
       ]
     }
