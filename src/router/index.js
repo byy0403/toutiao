@@ -4,6 +4,7 @@ import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
 import Setting from '@/views/setting'
+import Article from '@/views/article'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const router = new VueRouter({
           path: '/setting',
           name: 'Setting',
           component: Setting
+        },
+        {
+          path: '/article',
+          name: 'Article',
+          component: Article
         }
       ]
     }
