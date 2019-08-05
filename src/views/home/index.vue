@@ -51,13 +51,9 @@
             浅殇愫暮
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <span class="el-icon-setting"></span>&nbsp;个人设置
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <span class="el-icon-lock"></span>&nbsp;退出登录
-            </el-dropdown-item>
+          <el-dropdown-menu slot="dropdown" >
+            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-lock" @click.native="loginout()">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -68,6 +64,8 @@
   </el-container>
 </template>
 <script>
+import store from '@/store'
+
 export default {
   data () {
     return {
@@ -77,6 +75,10 @@ export default {
   methods: {
     toggleMenu () {
       this.isCollapse = !this.isCollapse
+    },
+    loginout () {
+      store.removeUser()
+      this.$router.push('/login')
     }
   }
 }

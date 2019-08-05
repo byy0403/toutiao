@@ -30,8 +30,8 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '',
-        code: ''
+        mobile: '13911111111',
+        code: '246810'
       },
       rules: {
         mobile: [
@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
+      this.$refs.loginForm.validate(async valid => {
+        /*  if (valid) {
           // 请求登录接口
           this.$http
             .post(
@@ -63,6 +63,16 @@ export default {
             .catch(() => {
               this.$message.error('手机号或验证码错误')
             })
+        } */
+        // async&await使用  怎么处理错误 try{}catch(e){} 捕获异常
+        try {
+          const {
+            data: { data }
+          } = await this.$http.post('authorizations', this.loginForm)
+          store.setUser(data)
+          this.$router.push('/')
+        } catch (error) {
+          this.$message.error('手机号或验证码错误')
         }
       })
     }
