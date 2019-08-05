@@ -45,19 +45,15 @@
       <el-header>
         <span class="el-icon-s-fold" @click="toggleMenu () " style="cursor: pointer;"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown :hide-on-click="false">
+        <el-dropdown :hide-on-click="false" @command="changeMenu">
           <span class="el-dropdown-link">
             <img :src="photo" alt />
             {{name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <span class="el-icon-setting"></span>&nbsp;个人设置
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <span class="el-icon-lock"></span>&nbsp;退出登录
-            </el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-lock" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -69,6 +65,7 @@
 </template>
 <script>
 import store from '@/store'
+
 export default {
   data () {
     return {
@@ -80,6 +77,16 @@ export default {
   methods: {
     toggleMenu () {
       this.isCollapse = !this.isCollapse
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logout () {
+      store.removeUser()
+      this.$router.push('/login')
+    },
+    changeMenu (menuType) {
+      this[menuType]()
     }
   },
   created () {

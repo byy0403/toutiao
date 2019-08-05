@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
-import Setting from '@/views/Setting'
+import Setting from '@/views/setting'
 
 Vue.use(VueRouter)
 
