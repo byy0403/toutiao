@@ -20,9 +20,9 @@
           <el-select v-model="reqParams.channel_id" placeholder="请选择">
             <el-option
               v-for="item in channelOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -46,8 +46,12 @@
         根据筛选条件共查询到
         <b>{{total}}</b> 条结果：
       </div>
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="封面" width="180"></el-table-column>
+      <el-table :data="articles" style="width: 100%">
+        <el-table-column label="封面" width="180">
+          <template slot-scope="scope">
+            <el-image :src="scope.row.cover.images[0]"></el-image>
+          </template>
+        </el-table-column>
         <el-table-column prop="name" label="标题" width="180"></el-table-column>
         <el-table-column prop="address" label="状态"></el-table-column>
         <el-table-column prop="date" label="发布时间" width="180"></el-table-column>
@@ -66,10 +70,32 @@ export default {
         channel_id: null
       },
       // 频道下拉选项数据
-      channelOptions: [{ value: 1, label: '开发者咨询' }],
+      channelOptions: [],
       dateArr: [],
+      articles: [],
       total: 0
     }
+  },
+  methods: {
+    // 获取下拉频道选项数据
+    async getChannelOptions () {
+      const {
+        data: { data }
+      } = await this.$http.get('channels')
+      this.channelOptions = data.channels
+    },
+    // 获取文章列表
+    async getArticles () {
+      const {
+        data: { data }
+      } = await this.$http.get('articles', { params: this.reqParams })
+      this.articles = data.results
+    }
+  },
+  created () {
+    // 获取频道下拉选项数据
+    this.getChannelOptions()
+    this.getArticles()
   }
 }
 </script>

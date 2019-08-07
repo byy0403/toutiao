@@ -5,7 +5,8 @@ import Home from '@/views/home'
 import Welcome from '@/views/welcome'
 import Setting from '@/views/setting'
 import Article from '@/views/article'
-
+import NotFound from '@/views/404'
+import store from '@/store'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -35,7 +36,17 @@ const router = new VueRouter({
           component: Article
         }
       ]
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: NotFound
+
     }
   ]
+})
+router.beforeEach((to, form, next) => {
+  if (to.path !== '/login' && !store.getUser().token) return next('/login')
+  return next()
 })
 export default router
