@@ -2,10 +2,21 @@
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
+import JSONBig from 'json-bigint'
 // import router from '@/router'
 
 // 进行配置
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
+axios.defaults.transformResponse = [
+  (data) => {
+    // data是后端的原始数据
+    try {
+      return JSONBig.parse(data)
+    } catch (err) {
+      return data
+    }
+  }
+]
 // 只会执行一次
 /* axios.defaults.headers = {
   Authorization: `Bearer ${store.getUser().token}`
