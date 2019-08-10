@@ -85,7 +85,7 @@ export default {
     async submit (draft) {
       await this.$http.post(`articles?draft=${draft}`, this.articleForm)
       this.$message.success(draft ? '文章存入草稿成功' : '文章发表成功')
-      // 去内容管理
+      // 去内容管理 23455
       this.$router.push('/article')
     }
   }
