@@ -31,8 +31,6 @@
           <my-channel v-model="articleForm.channel_id"></my-channel>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">发表</el-button>
-          <el-button>存入草稿</el-button>
           <el-button type="primary" @click="submit(false)">发表</el-button>
           <el-button @click="submit(true)">存入草稿</el-button>
         </el-form-item>
