@@ -120,7 +120,7 @@ export default {
     handleSuccess (res) {
       this.uploadimageUrl = res.data.url
     },
-    // 确认tupian
+    // 确认tupian 6666
     confirmImage () {
       // 让图片按钮能够显示你选中的或者上传的图片地址。
       if (this.activeName === 'image') {
