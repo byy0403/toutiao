@@ -2,7 +2,7 @@
   <div class="article-container">
     <el-card>
       <div slot="header">
-        <my-bread>发布文章</my-bread>
+        <my-bread>{{articleId?'修改文章':'发布文章'}}</my-bread>
       </div>
       <el-form label-width="100px">
         <el-form-item label="标题：">
@@ -30,9 +30,13 @@
         <el-form-item label="频道：">
           <my-channel v-model="articleForm.channel_id"></my-channel>
         </el-form-item>
-        <el-form-item>
+       <el-form-item v-if="!articleId">
           <el-button type="primary" @click="submit(false)">发表</el-button>
           <el-button @click="submit(true)">存入草稿</el-button>
+        </el-form-item>
+        <el-form-item v-else>
+          <el-button type="success" @click="update(false)">修改</el-button>
+          <el-button @click="update(true)">存入草稿</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -71,7 +75,9 @@ export default {
           images: []
         },
         channel_id: null
-      }
+      },
+      // 文章ID
+      articleId: null
     }
   },
   methods: {
@@ -85,6 +91,45 @@ export default {
       this.$message.success(draft ? '文章存入草稿成功' : '文章发表成功')
       // 去内容管理 23455
       this.$router.push('/article')
+    },
+    // 获取文章数据
+    async getArticle () {
+      const {
+        data: { data }
+      } = await this.$http.get('articles/' + this.articleId)
+      this.articleForm = data
+    },
+    // 修改文章
+    async update (draft) {
+      await this.$http.put(`articles/${this.articleId}?draft=${draft}`, this.articleForm)
+      this.$message.success(draft ? '修改存入草稿成功' : '文章修改成功')
+      // 去内容管理
+      this.$router.push('/article')
+    }
+  },
+  created () {
+    // 获取地址栏传参
+    this.articleId = this.$route.query.id
+    // 判断如果有ID 修改文章  获取当前文章数据
+    if (this.articleId) {
+      this.getArticle()
+    }
+  },
+  watch: {
+    // 不仅仅是data中的数据才可以去监听 $route实例的数据
+    $route () {
+      if (!this.$route.query.id) {
+        this.articleId = null
+        this.articleForm = {
+          title: null,
+          content: null,
+          cover: {
+            type: 1,
+            images: []
+          },
+          channel_id: null
+        }
+      }
     }
   }
 }

@@ -151,7 +151,7 @@ export default {
     },
     // 编辑文章
     edit (id) {
-      this.$router.push('/public?id=' + id)
+      this.$router.push('/publish?id=' + id)
     }
   },
   created () {
