@@ -12,20 +12,27 @@
           <quill-editor v-model="articleForm.content" :options="editorOption"></quill-editor>
         </el-form-item>
         <el-form-item label="封面：">
-          <el-radio-group v-model="articleForm.cover.type">
+          <el-radio-group v-model="articleForm.cover.type" @change="changeType">
             <el-radio :label="1">单图</el-radio>
             <el-radio :label="3">三图</el-radio>
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
-          <my-image></my-image>
+          <div v-if="articleForm.cover.type === 1">
+            <my-image v-model="articleForm.cover.images[0]"></my-image>
+          </div>
+          <div v-if="articleForm.cover.type === 3">
+            <my-image v-model="articleForm.cover.images[0]"></my-image>
+            <my-image v-model="articleForm.cover.images[1]"></my-image>
+            <my-image v-model="articleForm.cover.images[2]"></my-image>
+          </div>
         </el-form-item>
         <el-form-item label="频道：">
           <my-channel v-model="articleForm.channel_id"></my-channel>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">发表</el-button>
-          <el-button>存入草稿</el-button>
+          <el-button type="primary" @click="submit(false)">发表</el-button>
+          <el-button @click="submit(true)">存入草稿</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -65,6 +72,19 @@ export default {
         },
         channel_id: null
       }
+    }
+  },
+  methods: {
+    changeType () {
+      // 重置图片数据
+      this.articleForm.cover.images = []
+    },
+    // 发表文章或存入草稿
+    async submit (draft) {
+      await this.$http.post(`articles?draft=${draft}`, this.articleForm)
+      this.$message.success(draft ? '文章存入草稿成功' : '文章发表成功')
+      // 去内容管理
+      this.$router.push('/article')
     }
   }
 }
