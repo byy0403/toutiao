@@ -18,6 +18,7 @@
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
+          <my-image></my-image>
         </el-form-item>
         <el-form-item label="频道：">
           <my-channel v-model="articleForm.channel_id"></my-channel>

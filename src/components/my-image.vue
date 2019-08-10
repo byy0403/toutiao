@@ -6,7 +6,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'my-image',
+  data () {
+    return {}
+  }
+}
 </script>
 
 <style>
