@@ -64,6 +64,7 @@
   </el-container>
 </template>
 <script>
+import eventBus from '@/components/eventBus'
 import store from '@/store'
 
 export default {
@@ -94,6 +95,13 @@ export default {
     const user = store.getUser()
     this.name = user.name
     this.photo = user.photo
+
+    eventBus.$on('updateHeaderName', name => {
+      this.name = name
+    })
+    eventBus.$on('updateHeaderPhoto', url => {
+      this.photo = url
+    })
   }
 }
 </script>
